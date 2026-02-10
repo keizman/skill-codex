@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Task Verification Report",
+  "description": "Structured review report for a completed implementation task",
+  "type": "object",
+  "required": ["overall_verdict", "criteria_results", "issues_found", "suggestions"],
+  "additionalProperties": false,
+  "properties": {
+    "overall_verdict": {
+      "type": "string",
+      "enum": ["PASS", "FAIL"],
+      "description": "Overall pass/fail verdict for the task"
+    },
+    "criteria_results": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["criterion", "verdict", "notes"],
+        "additionalProperties": false,
+        "properties": {
+          "criterion": {
+            "type": "string",
+            "description": "The acceptance criterion being checked"
+          },
+          "verdict": {
+            "type": "string",
+            "enum": ["PASS", "FAIL"],
+            "description": "Whether this criterion is met"
+          },
+          "notes": {
+            "type": "string",
+            "description": "Brief explanation of the verdict"
+          }
+        }
+      }
+    },
+    "issues_found": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["severity", "description"],
+        "additionalProperties": false,
+        "properties": {
+          "severity": {
+            "type": "string",
+            "enum": ["critical", "warning", "info"],
+            "description": "Issue severity level"
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed description of the issue"
+          }
+        }
+      }
+    },
+    "suggestions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Optional improvement suggestions"
+    }
+  }
+}
